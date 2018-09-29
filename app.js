@@ -16,15 +16,15 @@ app.get('/', (req, res) => {
   res.send('Brinq - Employee development made easy.')
 })
 
-app.post('/authorize', (req, res) => {
+app.post('/authorize', async (req, res) => {
   console.log(req);
-  const { authorizationID } = req.body;
+  // const { authorizationID } = req.body;
 
-  await stripe.issuing.authorizations.approve({ authorizationID },
-    (err, authorization) => {
-      if (err) throw new Error(err);
-      res.send(authorization);
-    });
+  // await stripe.issuing.authorizations.approve({ authorizationID },
+  //   (err, authorization) => {
+  //     if (err) throw new Error(err);
+  //     res.send(authorization);
+  //   });
 
   // deny
   // await stripe.issuing.authorizations.decline({ authorizationID },
@@ -32,7 +32,7 @@ app.post('/authorize', (req, res) => {
   //     if (err) throw new Error(err);
   //     res.send(authorization);
   //   });
-  res.send('Process auth request.')
+  // res.send('Process auth request.')
 })
 
 app.get('/list', (req, res) => {
