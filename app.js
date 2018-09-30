@@ -40,25 +40,24 @@ app.post('/authorize', (req, res) => {
   res.send(req.body)
 })
 
-// https://stripe.com/docs/api#list_issuing_authorizations
 app.get('/list', (req, res) => {
-  // const { limit } = req.body;
+  const { limit } = req.body;
 
-  // await stripe.issuing.authorizations.list({ limit },
-  //   (err, authorization) => {
-  //     if (err) throw new Error(err);
-  //     res.send(authorization);
-  //   });
+  stripe.issuing.authorizations.list({ limit },
+    (err, authorization) => {
+      if (err) throw new Error(err);
+      res.send(authorization);
+    });
 })
 
 app.get('/get', (req, res) => {
-  // const { authorizationID } = req.body;
+  const { authorizationID } = req.body;
 
-  // await stripe.issuing.authorizations.retrieve({ authorizationID },
-  //   (err, authorization) => {
-  //     if (err) throw new Error(err);
-  //     res.send(authorization);
-  //   });
+  stripe.issuing.authorizations.retrieve({ authorizationID },
+    (err, authorization) => {
+      if (err) throw new Error(err);
+      res.send(authorization);
+    });
 })
 
 app.listen(port, (err) => {
