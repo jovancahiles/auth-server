@@ -25,11 +25,12 @@ app.post('/authorize', (req, res) => {
 
   if(type === 'issuing_authorization.request'){
     const authID = data.object.id
-    stripe.issuing.authorizations.approve({ authID },
-      (err, authorization) => {
-        if (err) throw new Error(err)
-        res.send(authorization)
-    });
+    console.log('>> ' + authID)
+    // stripe.issuing.authorizations.approve({ authID },
+    //   (err, authorization) => {
+    //     if (err) throw new Error(err)
+    //     res.send(authorization)
+    // });
   }
 
   // deny
