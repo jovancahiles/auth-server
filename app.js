@@ -4,12 +4,16 @@
  * https://stripe.com/docs/issuing/authorizations#authorization-handling
  *
  */
+require('dotenv').config()
 
 const express = require('express')
 const app = express()
 const port = 9000
 
 const bodyParser = require('body-parser')
+
+console.log(process.env.STRIPE_TOKEN);
+return;
 
 const stripe = require('stripe')(process.env.STRIPE_TOKEN)
 

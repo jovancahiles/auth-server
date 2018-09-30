@@ -4,6 +4,7 @@
   "description": "Employee Development Made Easy",
   "main": "app.js",
   "scripts": {
+    "start": "node app",
     "test": "npm test"
   },
   "repository": {
