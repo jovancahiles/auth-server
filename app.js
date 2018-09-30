@@ -1,7 +1,6 @@
 /**
  * Stripe Authorization
  * Handle authorization requests made during a card purchase.
- * https://stripe.com/docs/api#list_issuing_authorizations
  * https://stripe.com/docs/issuing/authorizations#authorization-handling
  *
  */
@@ -10,15 +9,23 @@ const express = require('express')
 const app = express()
 const port = 9000
 
+const bodyParser = require('body-parser')
+
 const stripe = require('stripe')(process.env.STRIPE_TOKEN)
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
   res.send('Brinq - Employee development made easy.')
 })
 
-app.post('/authorize', async (req, res) => {
-  console.log(req);
-  // const { authorizationID } = req.body;
+app.post('/authorize', (req, res) => {
+  const { type, data } = req.body;
+
+  if(type === 'issuing_authorization.request'){
+    console.log(data);
+  }
 
   // await stripe.issuing.authorizations.approve({ authorizationID },
   //   (err, authorization) => {
@@ -32,9 +39,10 @@ app.post('/authorize', async (req, res) => {
   //     if (err) throw new Error(err);
   //     res.send(authorization);
   //   });
-  // res.send('Process auth request.')
+  res.send(req.body)
 })
 
+// https://stripe.com/docs/api#list_issuing_authorizations
 app.get('/list', (req, res) => {
   // const { limit } = req.body;
 

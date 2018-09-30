@@ -19,6 +19,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/thebrinq/brinq#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "stripe": "^6.11.0"
