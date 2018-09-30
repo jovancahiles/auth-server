@@ -21,14 +21,14 @@ app.get('/', (req, res) => {
 })
 
 app.post('/authorize', (req, res) => {
-  const { type, data } = req.body;
+  const { type, data } = req.body
 
   if(type === 'issuing_authorization.request'){
     const authID = data.object.id
     stripe.issuing.authorizations.approve({ authID },
       (err, authorization) => {
-        if (err) throw new Error(err);
-        res.send(authorization);
+        if (err) throw new Error(err)
+        res.send(authorization)
     });
   }
 
