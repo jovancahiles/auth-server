@@ -21,15 +21,15 @@ app.get('/', (req, res) => {
 })
 
 app.post('/authorize', (req, res) => {
-  const { type, data } = req.body
+  // const { type, data } = req.body
 
-  if(type === 'issuing_authorization.request'){
-    stripe.issuing.authorizations.approve(data.object.id,
-      (err, authorization) => {
-        if (err) throw new Error(err)
-        res.send(authorization)
-    });
-  }
+  // if(type === 'issuing_authorization.request'){
+  //   stripe.issuing.authorizations.approve(data.object.id,
+  //     (err, authorization) => {
+  //       if (err) throw new Error(err)
+  //       res.send(authorization)
+  //   });
+  // }
 
   // deny
   // await stripe.issuing.authorizations.decline({ authorizationID },
@@ -37,7 +37,7 @@ app.post('/authorize', (req, res) => {
   //     if (err) throw new Error(err);
   //     res.send(authorization);
   //   });
-  res.send(req.body)
+  res.status(200).json(req.body);
 })
 
 app.post('/approve', (req, res) => {
