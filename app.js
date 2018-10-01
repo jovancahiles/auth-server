@@ -40,6 +40,15 @@ app.post('/authorize', (req, res) => {
   res.send(req.body)
 })
 
+app.post('/approve', (req, res) => {
+  const { authID } = req.body
+  stripe.issuing.authorizations.approve(authID,
+    (err, authorization) => {
+      if (err) throw new Error(err)
+      res.send(authorization)
+  });
+})
+
 app.get('/list', (req, res) => {
   const { limit } = req.body;
 
