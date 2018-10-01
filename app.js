@@ -41,12 +41,13 @@ app.post('/authorize', (req, res) => {
 })
 
 app.post('/approve', (req, res) => {
-  const { authID } = req.body
-  stripe.issuing.authorizations.approve(authID,
-    (err, authorization) => {
-      if (err) throw new Error(err)
-      res.send(authorization)
-  });
+  // const { authID } = req.body
+  console.log(req.body)
+  // stripe.issuing.authorizations.approve(authID,
+  //   (err, authorization) => {
+  //     if (err) throw new Error(err)
+  //     res.send(authorization)
+  // });
 })
 
 app.get('/list', (req, res) => {
