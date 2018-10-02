@@ -37,7 +37,7 @@ app.post('/authorize', (req, res) => {
   //     if (err) throw new Error(err);
   //     res.send(authorization);
   //   });
-  res.status(200).json(req.body);
+  return res.status(200).json(req.body);
 })
 
 app.post('/approve', (req, res) => {
