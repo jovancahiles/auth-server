@@ -21,8 +21,17 @@ app.get('/', (req, res) => {
 })
 
 app.post('/authorize', (req, res) => {
-  // const { type, data } = req.body
+  const { type, data } = req.body
 
+  // try {
+  //   let sig = req.headers['stripe-signature'];
+  //   let ev = stripe.webhooks.constructEvent(req.body, sig, env.endpointSecret);
+  //   if (ev) done(null, ev);
+  //  } catch (e) {
+  //    return res.sendStatus(401);
+  //  }
+
+  console.log(req.body)
   // if(type === 'issuing_authorization.request'){
   //   stripe.issuing.authorizations.approve(data.object.id,
   //     (err, authorization) => {
@@ -37,7 +46,7 @@ app.post('/authorize', (req, res) => {
   //     if (err) throw new Error(err);
   //     res.send(authorization);
   //   });
-  return res.status(200).json(req.body);
+  res.status(200).json(req.body);
 })
 
 app.post('/approve', (req, res) => {
