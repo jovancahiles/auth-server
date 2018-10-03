@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
   res.send('Brinq - Employee development made easy.')
 })
 
-app.post('/authorize', (req, res) => {
+app.post('/authorize', async (req, res) => {
   const { type, data } = req.body
 
   // try {
@@ -35,18 +35,14 @@ app.post('/authorize', (req, res) => {
   // console.log(req.body)
   // if(type === 'issuing_authorization.request'){
     console.log('----- auth: ' + data.object.id + ' -----')
-    const charge = stripe.issuing.authorizations.approve(data.object.id)
-    console.log('----- auth done -----')
-    console.log(charge)
+    await stripe.issuing.authorizations.approve(data.object.id,
+      (err, authorization) => {
+        if (err) throw new Error(err)
 
-    // stripe.issuing.authorizations.approve(data.object.id,
-    //   (err, authorization) => {
-    //     if (err) throw new Error(err)
-
-    //     console.log('----- auth done -----')
-    //     console.log(authorization)
-    //     res.send(authorization)
-    // });
+        console.log('----- auth done -----')
+        console.log(authorization)
+        res.send(authorization)
+    })
   // }
 
   // deny
