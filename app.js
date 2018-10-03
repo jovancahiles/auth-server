@@ -31,19 +31,18 @@ app.post('/authorize', async (req, res) => {
   //    return res.sendStatus(401);
   //  }
 
-  // console.log('----- auth request -----')
+  console.log('----- auth: ' + data.object.id + ' -----')
   // console.log(req.body)
-  // if(type === 'issuing_authorization.request'){
-    console.log('----- auth: ' + data.object.id + ' -----')
+  if(type === 'issuing_authorization.request'){
     await stripe.issuing.authorizations.approve(data.object.id,
       (err, authorization) => {
         if (err) throw new Error(err)
 
         console.log('----- auth done -----')
         console.log(authorization)
-        res.send(authorization)
+        // res.send(authorization)
     })
-  // }
+  }
 
   // deny
   // await stripe.issuing.authorizations.decline({ authorizationID },
