@@ -31,14 +31,19 @@ app.post('/authorize', (req, res) => {
   //    return res.sendStatus(401);
   //  }
 
+  console.log('----- auth request -----')
   console.log(req.body)
-  // if(type === 'issuing_authorization.request'){
-  //   stripe.issuing.authorizations.approve(data.object.id,
-  //     (err, authorization) => {
-  //       if (err) throw new Error(err)
-  //       res.send(authorization)
-  //   });
-  // }
+  if(type === 'issuing_authorization.request'){
+    console.log('----- auth start -----')
+    stripe.issuing.authorizations.approve(data.object.id,
+      (err, authorization) => {
+        if (err) throw new Error(err)
+
+        console.log('----- auth done -----')
+        console.log(authorization)
+        res.send(authorization)
+    });
+  }
 
   // deny
   // await stripe.issuing.authorizations.decline({ authorizationID },
