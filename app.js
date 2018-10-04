@@ -24,6 +24,9 @@ app.post('/authorize', (req, res) => {
   const { type, data } = req.body
   const stripeSig = req.headers['stripe-signature']
 
+  console.log('----- sig -----')
+  console.log(stripeSig)
+
   try {
     const event = stripe.webhooks.constructEvent(req.body, stripeSig, process.env.STRIPE_WEBHOOK_SECRET)
     if(event){
