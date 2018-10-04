@@ -10,7 +10,7 @@ const express = require('express')
 const app = express()
 const port = 9000
 
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser').raw({type: "*/*"})
 const stripe = require('stripe')(process.env.STRIPE_TOKEN)
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -24,14 +24,15 @@ app.post('/authorize', async (req, res) => {
   const { type, data } = req.body
   const sig = req.headers["stripe-signature"]
 
-  try {
-    let event = await stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET)
-    // Do something with event
-    console.log(event)
-  }
-  catch (err) {
-    res.status(400).end()
-  }
+  console.log(req.headers)
+
+  // try {
+  //   let event = await stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET)
+  //   console.log(event)
+  // }
+  // catch (err) {
+  //   res.status(400).end()
+  // }
 
   // Return a response
   // res.json({received: true});
