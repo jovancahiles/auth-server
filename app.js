@@ -20,12 +20,12 @@ app.get('/', (req, res) => {
   res.send('Brinq - Employee development made easy.')
 })
 
-app.post('/authorize', async (req, res) => {
+app.post('/authorize', (req, res) => {
   const { type, data } = req.body
-  const stripeSig = req.headers["stripe-signature"]
+  const stripeSig = req.headers['stripe-signature']
 
   try {
-    const event = await stripe.webhooks.constructEvent(req.body, stripeSig, process.env.STRIPE_WEBHOOK_SECRET)
+    const event = stripe.webhooks.constructEvent(req.body, stripeSig, process.env.STRIPE_WEBHOOK_SECRET)
     if(event){
       console.log('----- event -----')
       console.log(event)
