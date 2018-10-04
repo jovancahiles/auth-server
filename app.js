@@ -10,7 +10,7 @@ const express = require('express')
 const app = express()
 const port = 9000
 
-const bodyParser = require('body-parser').raw({type: "*/*"})
+const bodyParser = require('body-parser')
 const stripe = require('stripe')(process.env.STRIPE_TOKEN)
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -24,6 +24,7 @@ app.post('/authorize', async (req, res) => {
   const { type, data } = req.body
   const sig = req.headers["stripe-signature"]
 
+  console.log('----- headers -----')
   console.log(req.headers)
 
   // try {
