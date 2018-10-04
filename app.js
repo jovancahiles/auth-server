@@ -22,27 +22,31 @@ app.get('/', (req, res) => {
 
 app.post('/authorize', async (req, res) => {
   const { type, data } = req.body
+  const sig = req.headers["stripe-signature"]
 
-  // try {
-  //   let sig = req.headers['stripe-signature'];
-  //   let ev = stripe.webhooks.constructEvent(req.body, sig, env.endpointSecret);
-  //   if (ev) done(null, ev);
-  //  } catch (e) {
-  //    return res.sendStatus(401);
-  //  }
-
-  console.log('----- auth: ' + data.object.id + ' -----')
-  // console.log(req.body)
-  if(type === 'issuing_authorization.request'){
-    await stripe.issuing.authorizations.approve(data.object.id,
-      (err, authorization) => {
-        if (err) throw new Error(err)
-
-        console.log('----- auth done -----')
-        console.log(authorization)
-        // res.send(authorization)
-    })
+  try {
+    let event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET)
+    // Do something with event
+    console.log(event)
   }
+  catch (err) {
+    res.status(400).end()
+  }
+
+  // Return a response
+  res.json({received: true});
+
+  // console.log('----- auth: ' + data.object.id + ' -----')
+  // if(type === 'issuing_authorization.request'){
+  //   await stripe.issuing.authorizations.approve(data.object.id,
+  //     (err, authorization) => {
+  //       if (err) throw new Error(err)
+
+  //       console.log('----- auth done -----')
+  //       console.log(authorization)
+        // res.send(authorization)
+  //   })
+  // }
 
   // deny
   // await stripe.issuing.authorizations.decline({ authorizationID },
@@ -50,7 +54,6 @@ app.post('/authorize', async (req, res) => {
   //     if (err) throw new Error(err);
   //     res.send(authorization);
   //   });
-  res.status(200).json(req.body);
 })
 
 app.post('/approve', (req, res) => {
