@@ -22,18 +22,15 @@ app.get('/', (req, res) => {
 
 app.post('/authorize', async (req, res) => {
   const { type, data } = req.body
-  const sig = req.headers["stripe-signature"]
+  const stripeSig = req.headers["stripe-signature"]
 
-  console.log('----- headers -----')
-  console.log(req.headers)
-
-  // try {
-  //   let event = await stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET)
-  //   console.log(event)
-  // }
-  // catch (err) {
-  //   res.status(400).end()
-  // }
+  try {
+    const event = await stripe.webhooks.constructEvent(req.body, stripeSig, process.env.STRIPE_WEBHOOK_SECRET)
+    if(event) console.log(event)
+  }
+  catch (err) {
+    res.status(400).end()
+  }
 
   // Return a response
   // res.json({received: true});
