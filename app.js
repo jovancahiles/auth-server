@@ -26,7 +26,11 @@ app.post('/authorize', async (req, res) => {
 
   try {
     const event = await stripe.webhooks.constructEvent(req.body, stripeSig, process.env.STRIPE_WEBHOOK_SECRET)
-    if(event) console.log(event)
+    if(event){
+      console.log('----- event -----')
+      console.log(event)
+    }
+    console.log('event not found')
   }
   catch (err) {
     res.status(400).end()
