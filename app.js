@@ -34,7 +34,7 @@ app.post('/authorize', async (req, res) => {
   }
 
   // Return a response
-  res.json({received: true});
+  // res.json({received: true});
 
   // console.log('----- auth: ' + data.object.id + ' -----')
   // if(type === 'issuing_authorization.request'){
