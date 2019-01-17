@@ -4,8 +4,8 @@
   "description": "Employee Development Made Easy",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
-    "test": "npm test"
+    "start": "nodemon app",
+    "test": "nodemon test"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "stripe": "^6.11.0"
+    "stripe": "^6.11.0",
+    "nodemon": "^1.18.4"
   }
 }
