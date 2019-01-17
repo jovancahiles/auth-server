@@ -28,6 +28,6 @@ app.listen(80, (err) => {
     return console.log('something bad happened', err)
   }
 
-  console.log(`server is listening on 3000`)
+  console.log(`server is listening on 80`)
 })
 

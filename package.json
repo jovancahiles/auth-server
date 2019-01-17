@@ -4,8 +4,8 @@
   "description": "Employee Development Made Easy",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app",
-    "test": "nodemon test"
+    "start": "forever start app.js",
+    "stop": "forever stop app.js"
   },
   "repository": {
     "type": "git",
