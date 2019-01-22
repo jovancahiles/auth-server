@@ -1,17 +1,17 @@
 # Create image from nodejs base image
 FROM node:6
 
-# Clone the repo from github
-RUN git clone git@bitbucket.org:brinqproduct/authorization-server.git
-
 # Change workind directory to the cloned repo
 WORKDIR /authorization-server
+
+# Copy the current directory contents into the container at /app
+COPY . /authorization-server
 
 # Install all the dependencies
 RUN npm install
 
 # Expose port
-EXPOSE 80
+EXPOSE 8080
 
 # Run the application
 CMD ["npm", "start"]

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: brinq-auth-server
+spec:
+  containers:
+    - name: brinq-auth-server
+      image: deloreyjmi/brinq-auth-server:v1
