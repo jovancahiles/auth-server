@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 
 const stripe = require('stripe')(process.env.STRIPE_TOKEN);
 
+const networkIds = ['000174101933995', '000445136930994', '000227470792994', '000445191569992'];
+
 app.use(bodyParser.json()); // parsing application/json
 
 app.get('/', (req, res) => {
@@ -19,31 +21,27 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  // const { data } = req.body
-  // const stripeSig = req.headers['stripe-signature']
-  console.log('request body', req.body.data.object);
-  console.log('merchant', req.body.data.object.merchant_data);
-
   const {
     id,
     authorization_method,
     authorized_currency,
     pending_authorized_amount,
     card: { metadata: { remainingBudget } },
-    merchant_data: { category }
+    merchant_data: { network_id }
   } = req.body.data.object;
 
-  console.log('remaining Budget', Number(remainingBudget));
 
   if (
     authorization_method === 'online' &&
     authorized_currency === 'usd' &&
     pending_authorized_amount <= Number(remainingBudget) &&
-    category
+    networkIds.includes(network_id)
   ) {
-    return stripe.issuing.authorizations.approve(id);
+    stripe.issuing.authorizations.approve(id);
+    res.status(200).send('Authorization approved');
   }
-  return stripe.issuing.authorizations.decline(id);
+  stripe.issuing.authorizations.decline(id);
+  res.status(400).send('Authorization rejected');
 })
 
 app.listen(8080, '0.0.0.0', (err) => {
