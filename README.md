@@ -1,166 +1,28 @@
 # Authorization Server
 
-# sample data
-{ id: 'evt_1DG96AFssfmA1DQMdJqKkca9',
-  object: 'event',
-  api_version: '2018-07-27',
-  created: 1538329974,
-  data: 
-   { object: 
-      { id: 'iauth_1DG96AFssfmA1DQMbgYS2v7y',
-        object: 'issuing.authorization',
-        approved: false,
-        authorization_method: 'online',
-        authorized_amount: 0,
-        authorized_currency: 'usd',
-        balance_transactions: [],
-        card: [Object],
-        cardholder: 'ich_1DF1zBFssfmA1DQMos335N10',
-        created: 1538329974,
-        held_amount: 0,
-        held_currency: 'usd',
-        is_held_amount_controllable: false,
-        livemode: false,
-        merchant_data: [Object],
-        metadata: {},
-        pending_authorized_amount: 3000,
-        pending_held_amount: 3000,
-        request_history: [],
-        status: 'pending',
-        transactions: [],
-        verification_data: [Object] } },
-  livemode: false,
-  pending_webhooks: 1,
-  request: { id: null, idempotency_key: null },
-  type: 'issuing_authorization.request' }
+## Getting started
+Clone the repo and run `npm install`
+See package.json for npm scripts
 
-{ id: 'evt_1DG978FssfmA1DQMHAqeoGT3',
-  object: 'event',
-  api_version: '2018-07-27',
-  created: 1538330034,
-  data: 
-   { object: 
-      { id: 'iauth_1DG978FssfmA1DQMCcRn2KbA',
-        object: 'issuing.authorization',
-        approved: false,
-        authorization_method: 'online',
-        authorized_amount: 0,
-        authorized_currency: 'usd',
-        balance_transactions: [],
-        card: [Object],
-        cardholder: 'ich_1DF1zBFssfmA1DQMos335N10',
-        created: 1538330034,
-        held_amount: 0,
-        held_currency: 'usd',
-        is_held_amount_controllable: false,
-        livemode: false,
-        merchant_data: [Object],
-        metadata: {},
-        pending_authorized_amount: 3000,
-        pending_held_amount: 3000,
-        request_history: [],
-        status: 'pending',
-        transactions: [],
-        verification_data: [Object] } },
-  livemode: false,
-  pending_webhooks: 1,
-  request: { id: null, idempotency_key: null },
-  type: 'issuing_authorization.request' }
-{ id: 'evt_1DG989FssfmA1DQMkxRwCavf',
-  object: 'event',
-  api_version: '2018-07-27',
-  created: 1538330097,
-  data: 
-   { object: 
-      { id: 'iauth_1DG989FssfmA1DQM9W8RwVrR',
-        object: 'issuing.authorization',
-        approved: false,
-        authorization_method: 'online',
-        authorized_amount: 0,
-        authorized_currency: 'usd',
-        balance_transactions: [],
-        card: [Object],
-        cardholder: 'ich_1DF1zBFssfmA1DQMos335N10',
-        created: 1538330097,
-        held_amount: 0,
-        held_currency: 'usd',
-        is_held_amount_controllable: false,
-        livemode: false,
-        merchant_data: [Object],
-        metadata: {},
-        pending_authorized_amount: 3000,
-        pending_held_amount: 3000,
-        request_history: [],
-        status: 'pending',
-        transactions: [],
-        verification_data: [Object] } },
-  livemode: false,
-  pending_webhooks: 1,
-  request: { id: null, idempotency_key: null },
-  type: 'issuing_authorization.request' }
-{ id: 'evt_1DG996FssfmA1DQMkUmvv06m',
-  object: 'event',
-  api_version: '2018-07-27',
-  created: 1538330156,
-  data: 
-   { object: 
-      { id: 'iauth_1DG996FssfmA1DQMpOkWdRGo',
-        object: 'issuing.authorization',
-        approved: false,
-        authorization_method: 'online',
-        authorized_amount: 0,
-        authorized_currency: 'usd',
-        balance_transactions: [],
-        card: [Object],
-        cardholder: 'ich_1DF1zBFssfmA1DQMos335N10',
-        created: 1538330156,
-        held_amount: 0,
-        held_currency: 'usd',
-        is_held_amount_controllable: false,
-        livemode: false,
-        merchant_data: [Object],
-        metadata: {},
-        pending_authorized_amount: 3000,
-        pending_held_amount: 3000,
-        request_history: [],
-        status: 'pending',
-        transactions: [],
-        verification_data: [Object] } },
-  livemode: false,
-  pending_webhooks: 1,
-  request: { id: null, idempotency_key: null },
-  type: 'issuing_authorization.request' }
-{ id: 'evt_1DG9A5FssfmA1DQMAb3b6Zd8',
-  object: 'event',
-  api_version: '2018-07-27',
-  created: 1538330217,
-  data: 
-   { object: 
-      { id: 'iauth_1DG9A5FssfmA1DQMVFiz4FMz',
-        object: 'issuing.authorization',
-        approved: false,
-        authorization_method: 'online',
-        authorized_amount: 0,
-        authorized_currency: 'usd',
-        balance_transactions: [],
-        card: [Object],
-        cardholder: 'ich_1DF1zBFssfmA1DQMos335N10',
-        created: 1538330217,
-        held_amount: 0,
-        held_currency: 'usd',
-        is_held_amount_controllable: false,
-        livemode: false,
-        merchant_data: [Object],
-        metadata: {},
-        pending_authorized_amount: 3000,
-        pending_held_amount: 3000,
-        request_history: [],
-        status: 'pending',
-        transactions: [],
-        verification_data: [Object] } },
-  livemode: false,
-  pending_webhooks: 1,
-  request: { id: null, idempotency_key: null },
-  type: 'issuing_authorization.request' }
+## Deploying changes to docker
+Build the docker container. Make sure to use the correct tag like `:v6` `docker build -t deloreyjmi/brinq-auth-server:v6 .`
+Push the docker container to docker hub `docker push deloreyjmi/brinq-auth-server:v6`
+- Make sure the tag matches the tag from the build step
+
+## Kubernetes setup
+There are three files in the `k8s/` folder:
+- auth-server-deployment.yaml includes the deployment definition for the express app defined in `app.js`. By default it has 3 replicas, but should be able to continue to scale horizontally. It connects to the redis master and slave using a password stored in a Kubernetes secret.
+- auth-server-service.yaml includes the definition for the service that exposes the above deployment to the outside world. It load balances incoming requests.
+- volume-claim.yaml defines a persistent volume claim. It's a place to put our redis backups that won't disappear if a node fails. 
+
+We use a Helm chart to deploy a production-grade redis setup with a master/slave architecture. The chart can be found here: https://github.com/helm/charts/tree/master/stable/redis
 
 
+## Development
+Install docker-for-mac desktop and enable kubernetes from the preferences > kubernetes panel. This gives you a single-node cluster setup on your local machine. It makes development MUCH easier. https://docs.docker.com/docker-for-mac/install/
+
+Set the kubernetes context to local by running `kubectl config set-context docker-for-mac` 
+
+Deploy the helm chart by running `helm install stable/redis`
+Update the name of the redis secret in `auth-server-deployment.yaml`
+Deploy the auth service by running `kubectl apply -f auth-server-deployment.yaml, auth-server-service.yaml`

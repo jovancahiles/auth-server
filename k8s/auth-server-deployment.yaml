@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brinq-auth-server
+  labels:
+    app: brinq-auth-server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: brinq-auth-server
+  template:
+    metadata:
+      labels:
+        app: brinq-auth-server
+    spec:
+      containers:
+        - name: brinq-auth-server-container
+          image: deloreyjmi/brinq-auth-server:v6
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: left-wasp-redis
+                    key: redis-password
+          ports: 
+          - containerPort: 8080
+          resources:
+            limits:
+              cpu: "0.1"
+              memory: "64Mi"
