@@ -15,7 +15,8 @@ There are three files in the `k8s/` folder:
 - auth-server-service.yaml includes the definition for the service that exposes the above deployment to the outside world. It load balances incoming requests.
 - volume-claim.yaml defines a persistent volume claim. It's a place to put our redis backups that won't disappear if a node fails. 
 
-We use a Helm chart to deploy a production-grade redis setup with a master/slave architecture. The chart can be found here: https://github.com/helm/charts/tree/master/stable/redis
+We use a Helm chart to deploy a production-grade redis setup with a sentinel architecture. The chart can be found here: https://github.com/helm/charts/tree/master/stable/redis-ha
+We use this setup to handle ingress and ssl certs: https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes
 
 
 ## Development

@@ -9,23 +9,20 @@ require('dotenv').config()
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const redis = require("redis");
+const Redis = require('ioredis');
+const cors = require('cors');
 
-const masterclient = redis.createClient({
-  host: 'left-wasp-redis-master.default.svc.cluster.local',
+const client = new Redis({
+  sentinels: [{ host: 'dangling-moth-redis-ha.default.svc.cluster.local', port: 26379}],
+  name: 'mymaster'
 });
-masterclient.auth(process.env.REDIS_PASSWORD);
-
-const slaveclient = redis.createClient({
-  host: 'left-wasp-redis-slave.default.svc.cluster.local',
-});
-slaveclient.auth(process.env.REDIS_PASSWORD);
 
 const stripe = require('stripe')(process.env.STRIPE_TOKEN);
 
 const networkIds = ['000174101933995', '000445136930994', '000227470792994', '000445191569992'];
 
 app.use(bodyParser.json()); // parsing application/json
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Brinq - Employee development made easy.')
@@ -47,7 +44,7 @@ app.post('/authorize', (req, res) => {
     authorized_currency === 'usd' &&
     networkIds.includes(network_id)
   ) {
-    masterclient.get(cardholder, (err, reply) => {
+    client.get(cardholder, (err, reply) => {
       if (!reply) {
         stripe.issuing.authorizations.decline(id);
         res.status(400).send('No such user');
@@ -56,15 +53,22 @@ app.post('/authorize', (req, res) => {
       if (budget > pending_authorized_amount) {
         console.log('would authorize');
         const newBudget = (budget - pending_authorized_amount) / 100;
-        masterclient.set(cardholder, newBudget);
-        stripe.issuing.authorizations.approve(id).catch((e) => {
-          masterclient.set(cardholder, reply);
+        client.set(cardholder, newBudget);
+        console.log('Responding to authorization', Date.now());
+        stripe.issuing.authorizations.approve(id).then((stripeRes) => {
+          console.log('responding to authorization succeeded', Date.now());
+          res.status(200).send('Authorization approved');
+        }).catch((e) => {
+          console.log('responding to authorization threw', Date.now());
+          console.log('approving the authorization threw', e);
+          client.set(cardholder, reply);
+          res.status(500).send('Authorization failed');
         });
-        res.status(200).send('Authorization approved');
       } else {
         console.log('would not authorize');
-        stripe.issuing.authorizations.decline(id);
-        res.status(400).send('Authorization rejected');        
+        stripe.issuing.authorizations.decline(id).then((result) => {
+          res.status(400).send('Authorization rejected because of insufficient funds');
+        });        
       }
     });    
   } else {
@@ -90,27 +94,27 @@ app.post('/setBudget', (req, res) => {
 
   switch(type) {
     case 'set':
-      masterclient.set(key, amount, (err, reply) => {
+      client.set(key, amount, (err, reply) => {
         if (err) return res.status(400).send(err);
         res.status(200).send('Budget set successfully');
       });
       break;
     case 'add':
-      slaveclient.get(key, (err, reply) => {
+      client.get(key, (err, reply) => {
         if (err) return res.status(400).send(err);
         if (!reply) return res.status(400).send('invalid key');
         const budget = +reply + amount;
-        masterclient.set(key, budget, (err, reply) => {
+        client.set(key, budget, (err, reply) => {
           res.status(200).send('Budget updated successfully');
         });
       });
       break;
     case 'subtract':
-      slaveclient.get(key, (err, reply) => {
+      client.get(key, (err, reply) => {
         if (err) return res.status(400).send(err);
         if (!reply) return res.status(400).send('invalid key');
         const budget = +reply - amount;
-        masterclient.set(key, budget, (err, reply) => {
+        client.set(key, budget, (err, reply) => {
           res.status(200).send('Budget updated succesfully');
         });
       });
@@ -127,7 +131,7 @@ app.post('/getBudget', (req, res) => {
   } = req.body;
   if (!key) return  res.status(400).send('key is a required parameter');
 
-  slaveclient.get(key, (err, reply) => {
+  client.get(key, (err, reply) => {
     if (err) return res.status(400).send(err);
     if (!reply) return res.status(400).send('invalid key');
     res.status(200).send({"budget": reply});

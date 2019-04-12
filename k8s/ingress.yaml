@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: auth-ingress
+  annotations:  
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+      - auth-server.thebrinq.com
+      secretName: letsencrypt-prod
+  rules:
+  - host: auth-server.thebrinq.com
+    http:
+      paths:
+      - backend:
+          serviceName: brinq-auth-server
+          servicePort: 80

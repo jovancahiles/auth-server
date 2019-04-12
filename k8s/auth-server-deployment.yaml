@@ -16,13 +16,13 @@ spec:
     spec:
       containers:
         - name: brinq-auth-server-container
-          image: deloreyjmi/brinq-auth-server:v6
+          image: deloreyjmi/brinq-auth-server:v7.47
           env:
-            - name: REDIS_PASSWORD
+            - name: STRIPE_TOKEN
               valueFrom:
-                  secretKeyRef:
-                    name: left-wasp-redis
-                    key: redis-password
+                secretKeyRef:
+                  name: stripe-key
+                  key: key
           ports: 
           - containerPort: 8080
           resources:
