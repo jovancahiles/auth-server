@@ -5,7 +5,7 @@ metadata:
   labels:
     app: brinq-auth-server
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
       app: brinq-auth-server
@@ -16,16 +16,32 @@ spec:
     spec:
       containers:
         - name: brinq-auth-server-container
-          image: deloreyjmi/brinq-auth-server:v7.47
+          image: deloreyjmi/brinq-auth-server:1.0.0
           env:
             - name: STRIPE_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: stripe-key
                   key: key
+            - name: FIREBASE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: firebase-secret
+                  key: private_key
+            - name: FIREBASE_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  key: client_email
+                  name: firebase-secret
+            - name: FIREBASE_PROJECT
+              valueFrom:
+                secretKeyRef:
+                  key: project_id
+                  name: firebase-secret
+
           ports: 
           - containerPort: 8080
           resources:
             limits:
-              cpu: "0.1"
+              cpu: "0.2"
               memory: "64Mi"

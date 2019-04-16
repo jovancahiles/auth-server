@@ -1,11 +1,12 @@
 # Create image from nodejs base image
-FROM node:6
+FROM node:10
 
 # Change workind directory to the cloned repo
 WORKDIR /authorization-server
 
 # Copy the current directory contents into the container at /app
-COPY . /authorization-server
+COPY ./src /authorization-server/src
+COPY ./package.json /authorization-server
 
 # Install all the dependencies
 RUN npm install
