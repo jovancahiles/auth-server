@@ -62,8 +62,7 @@ app.post('/authorize', async (req, res) => {
 
   if (
     authorization_method === 'online' &&
-    authorized_currency === 'usd' &&
-    networkIds.includes(network_id)
+    authorized_currency === 'usd'
   ) {
     if (!budgets[cardholder]) {
       stripe.issuing.authorizations.decline(id);
@@ -75,7 +74,7 @@ app.post('/authorize', async (req, res) => {
       console.log('authorizing', Date.now() - start);
       return await stripe.issuing.authorizations.approve(id).then(async stripeRes => {
         console.log('responding to authorization succeeded', Date.now() - start);
-        await db.collection('budgets').doc(cardholder).update({ budget: newBudget });
+        await db.collection('budgets').doc(cardholder).update({ budget: newBudget.toFixed(2) });
         res.status(200).send('Authorization approved');
       }).catch((e) => {
         console.log('responding to authorization threw', Date.now() - start);
