@@ -6,6 +6,14 @@
   "configurations": [
     {
       "type": "node",
+      "request": "attach",
+      "name": "Attach",
+      "port": 9229,
+      "localRoot": "${workspaceRoot}",
+      "remoteRoot": "/authorization-server"
+    },
+    {
+      "type": "node",
       "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/src/app.js"
