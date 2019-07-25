@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: brinq-auth-server-container
-          image: deloreyjmi/brinq-auth-server:1.0.2
+          image: deloreyjmi/brinq-auth-server:1.0.3
           env:
             - name: STRIPE_TOKEN
               valueFrom:
